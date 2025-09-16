@@ -12,7 +12,7 @@ body {
   line-height: 1.5;
 }
 
-/* Layout components */
+/* Contenedor principal */
 .main-container {
   display: flex;
   min-height: 100vh;
@@ -20,28 +20,24 @@ body {
 }
 
 .sidebar {
-  width: 22%;
-  background-color: rgba(153, 171, 37, 0.19);
-  padding-top: 28px;
+  background-color: #EFF2DC;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;   /* ocupa toda la altura de la ventana */
+  width: 260px;
   display: flex;
   flex-direction: column;
-  gap: 36px;
-  position: fixed;
-  height: auto;
-  min-height: 100vh;
-  left: -100%;
-  transition: left 0.3s ease;
+  padding: 20px 0;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-}
-
-.sidebar.open {
-  left: 0;
+  transition: left 0.3s ease;
 }
 
 .sidebar-header {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px; /* espacio entre imagen usuario y logo */
   align-items: center;
   width: 100%;
   margin-left: 24px;
@@ -216,12 +212,12 @@ body {
   margin-right: 80px;
 }
 
+/* Ajustar contenido principal para que no se monte encima */
 .main-content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  flex: 1;
-  margin-left: 0;
+  margin-left: 260px;  /* deja espacio para el sidebar */
+  width: calc(100% - 260px);
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  padding-bottom: 60px; /* espacio solo al final de la página */
 }
 
 .header {
@@ -346,10 +342,12 @@ body {
 
 .stats-row {
   display: flex;
+  flex-direction: row; /* fila por defecto */
+  justify-content: center;
+  align-items: center;
   gap: 116px;
   width: 100%;
   margin: 0 0 30px 0;
-  justify-content: center;
 }
 
 .stat-item {
@@ -684,10 +682,11 @@ body {
 }
 
 .action-icon {
-  width: 18px;
-  height: 18px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  object-fit: contain;  /* 👈 asegura que la imagen no se corte */
 }
 
 .action-icon:hover {
@@ -780,11 +779,19 @@ button:active {
   transform: translateY(0);
 }
 
-/* Responsive media queries */
+/* RESPONSIVE - en móviles sigue funcionando tu hamburguesa */
 @media (max-width: 1023px) {
-  .main-container {
-    flex-direction: column;
+  .sidebar {
+    left: -100%; /* oculto en móvil */
   }
+  .sidebar.open {
+    left: 0; /* aparece al abrir con la hamburguesa */
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+  }
+}
   
   .sidebar {
     width: 100%;
@@ -835,13 +842,6 @@ button:active {
   .summary-container {
     width: 100%;
     padding: 16px 24px;
-  }
-  
-  .stats-row {
-    flex-direction: column;
-    gap: 32px;
-    margin: 0 0 20px 0;
-    align-items: center;
   }
   
   .stat-item {
@@ -1003,7 +1003,7 @@ button:active {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1023px) {
   .hamburger {
     display: none;
   }
@@ -1050,6 +1050,994 @@ button:active {
     margin: 0 350px 0 340px;
   }
 }
+
+/* En pantallas pequeñas: vertical */
+@media (max-width: 1023px) {
+  .stats-row {
+    flex-direction: column; /* solo cuando se achica */
+    gap: 32px;
+    margin: 0 0 20px 0;
+    align-items: center;
+  }
+}
+
+.usuario-mi-perfil-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+ 
+.usuario-mi-perfil-usuario-mi-perfil {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 1);
+}
+ 
+.usuario-mi-perfil-header {
+  width: 100%;
+  height: 80px; /* o lo que necesites */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky; /* 👈 siempre visible al hacer scroll */
+  top: 0;           /* 👈 se queda pegado arriba */
+  z-index: 100;     /* para que quede encima del contenido */
+}
+ 
+.usuario-mi-perfil-cartbutton {
+  gap: 8px;
+  top: 28px;
+  left: 1015px;
+  width: 49px;
+  height: 48px;
+  display: flex;
+  padding: 14px 23px;
+  overflow: hidden;
+  position: absolute;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 20px;
+  justify-content: center;
+  background-color: rgba(13, 125, 179, 1);
+}
+ 
+.usuario-mi-perfil-text10 {
+  top: 12.5px;
+  left: 12px;
+  color: rgba(255, 255, 255, 1);
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Semi Bold;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text11 {
+  top: 39px;
+  left: 1064px;
+  color: rgba(0, 0, 0, 1);
+  width: 191px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-vector10 {
+  top: 21px;
+  left: 933px;
+  width: 61px;
+  height: 61px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-vector11 {
+  top: 28px;
+  left: 848px;
+  width: 64px;
+  height: 50px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-vector12 {
+  top: 32px;
+  left: 852px;
+  width: 56px;
+  height: 26px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-barra-menu-administrativo {
+  width: 260px;
+  height: 100vh; /* 👈 toda la altura visible */
+  background: #1e293b; /* ejemplo */
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  position: fixed; /* 👈 se queda fijo en la izquierda */
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+ 
+.usuario-mi-perfil-pn-glogobiomedical1 {
+  top: 28px;
+  left: 50px;
+  width: 223px;
+  height: 110px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-men-administrador {
+  top: 179px;
+  left: 45px;
+  width: 282px;
+  height: 104px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+ 
+.usuario-mi-perfil-text12 {
+  top: 39px;
+  left: 121px;
+  color: rgba(0, 0, 0, 1);
+  width: 161px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-cuadro {
+  top: 0px;
+  left: 0px;
+  width: 106px;
+  height: 104px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 250px;
+  background-color: rgba(255, 255, 255, 1);
+}
+ 
+.usuario-mi-perfil-doctor1 {
+  top: 0px;
+  left: -2px;
+  width: 110px;
+  height: 104px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-ginger1 {
+  top: 103px;
+  left: 371px;
+  width: 1292px;
+  height: 73px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-color: rgba(239, 242, 220, 1);
+}
+ 
+.usuario-mi-perfil-text13 {
+  top: 17px;
+  left: 585px;
+  color: rgba(13, 125, 179, 1);
+  width: 122px;
+  height: auto;
+  position: absolute;
+  font-size: 30px;
+  font-style: Semi Bold;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-botn-inicio1 {
+  top: 320px;
+  left: 0px;
+  width: 371px;
+  height: 71px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(255, 255, 255, 1);
+}
+ 
+.usuario-mi-perfil-vector13 {
+  top: 18px;
+  left: 51px;
+  width: 31px;
+  height: 29px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-text14 {
+  top: 21px;
+  left: 96px;
+  color: rgba(0, 0, 0, 1);
+  width: 224px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-botn-citas {
+  top: 397px;
+  left: 0px;
+  width: 371px;
+  height: 71px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(255, 255, 255, 1);
+}
+ 
+.usuario-mi-perfil-group {
+  top: 23px;
+  left: 53px;
+  width: 25px;
+  height: 24px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+}
+ 
+.usuario-mi-perfil-vector14 {
+  top: 0px;
+  left: 0px;
+  width: 25px;
+  height: 24px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-vector15 {
+  top: 8.000008583068848px;
+  left: 6.25px;
+  width: 12px;
+  height: 8px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-text15 {
+  top: 22px;
+  left: 95px;
+  color: rgba(0, 0, 0, 1);
+  width: 224px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-botn-pacientes {
+  top: 474px;
+  left: 0px;
+  width: 371px;
+  height: 71px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(230, 230, 230, 1);
+}
+ 
+.usuario-mi-perfil-vector16 {
+  top: 20px;
+  left: 56px;
+  width: 13px;
+  height: 31px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-text16 {
+  top: 22px;
+  left: 92px;
+  color: rgba(0, 0, 0, 1);
+  width: 224px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-materialsymbolslightlogout {
+  top: 569px;
+  left: 48px;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+ 
+.usuario-mi-perfil-botn-inicio2 {
+  top: 551px;
+  left: 0px;
+  width: 371px;
+  height: 71px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 1;
+  background-color: rgba(255, 255, 255, 1);
+}
+ 
+.usuario-mi-perfil-text17 {
+  top: 23px;
+  left: 92.1666259765625px;
+  color: rgba(0, 0, 0, 1);
+  width: 224px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Regular;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 400;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-vector17 {
+  top: 25.8333740234375px;
+  left: 51px;
+  width: 23px;
+  height: 23px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-mi-perfil {
+  top: 304px;
+  left: 587px;
+  width: 841px;
+  height: 802px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 24px;
+  background-color: rgba(255, 255, 255, 1);
+}
+ 
+.usuario-mi-perfil-text18 {
+  top: 112px;
+  left: 342px;
+  color: rgba(109, 109, 109, 1);
+  width: 158px;
+  height: auto;
+  position: absolute;
+  font-size: 24px;
+  font-style: Semi Bold;
+  text-align: center;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text19 {
+  top: 352px;
+  left: 443px;
+  color: rgba(0, 0, 0, 1);
+  width: 187px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-ginger2 {
+  top: 382px;
+  left: 425px;
+  width: 258px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text20 {
+  top: 10px;
+  left: 29px;
+  color: rgba(194, 194, 194, 1);
+  width: 205px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-ginger3 {
+  top: 202px;
+  left: 158px;
+  width: 525px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text21 {
+  top: 10px;
+  left: 29px;
+  color: rgba(194, 194, 194, 1);
+  width: 398px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text22 {
+  top: 173px;
+  left: 174px;
+  color: rgba(0, 0, 0, 1);
+  width: 120px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-ginger4 {
+  top: 292px;
+  left: 158px;
+  width: 258px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text23 {
+  top: 10px;
+  left: 21px;
+  color: rgba(194, 194, 194, 1);
+  width: 229px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-ginger5 {
+  top: 292px;
+  left: 426px;
+  width: 257px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text24 {
+  top: 10px;
+  left: 19px;
+  color: rgba(194, 194, 194, 1);
+  width: 227px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text25 {
+  top: 263px;
+  left: 174px;
+  color: rgba(0, 0, 0, 1);
+  width: 161px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text26 {
+  top: 264px;
+  left: 444px;
+  color: rgba(0, 0, 0, 1);
+  width: 161px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-ginger6 {
+  top: 382px;
+  left: 158px;
+  width: 257px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text27 {
+  top: 10px;
+  left: 29px;
+  color: rgba(194, 194, 194, 1);
+  width: 181px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text28 {
+  top: 353px;
+  left: 178px;
+  color: rgba(0, 0, 0, 1);
+  width: 161px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text29 {
+  top: 443px;
+  left: 176px;
+  color: rgba(0, 0, 0, 1);
+  width: 161px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-ginger7 {
+  top: 472px;
+  left: 158px;
+  width: 257px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text30 {
+  top: 10px;
+  left: 19px;
+  color: rgba(194, 194, 194, 1);
+  width: 227px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-vector18 {
+  top: 31px;
+  left: 239px;
+  width: 20px;
+  height: 10px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-text31 {
+  top: 444px;
+  left: 444px;
+  color: rgba(0, 0, 0, 1);
+  width: 161px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-ginger8 {
+  top: 473px;
+  left: 426px;
+  width: 257px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text32 {
+  top: 10px;
+  left: 19px;
+  color: rgba(194, 194, 194, 1);
+  width: 227px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-vector19 {
+  top: 31px;
+  left: 239px;
+  width: 20px;
+  height: 10px;
+  position: absolute;
+}
+ 
+.usuario-mi-perfil-ginger9 {
+  top: 556px;
+  left: 158px;
+  width: 525px;
+  height: 49px;
+  display: flex;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+  border-color: rgba(230, 230, 230, 1);
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 35px;
+  background-color: rgba(250, 250, 245, 1);
+}
+ 
+.usuario-mi-perfil-text33 {
+  top: 10px;
+  left: 29px;
+  color: rgba(194, 194, 194, 1);
+  width: 398px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-text34 {
+  top: 527px;
+  left: 179px;
+  color: rgba(0, 0, 0, 1);
+  width: 161px;
+  height: auto;
+  position: absolute;
+  font-size: 18px;
+  font-style: Light;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 300;
+  line-height: 160.0000023841858%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+ 
+.usuario-mi-perfil-button {
+  gap: 8px;
+  top: 647px;
+  left: 302px;
+  width: 237px;
+  height: 42px;
+  display: flex;
+  padding: 19px 32px;
+  overflow: hidden;
+  position: absolute;
+  align-items: flex-start;
+  border-radius: 20px;
+  background-color: rgba(153, 171, 37, 1);
+}
+ 
+.usuario-mi-perfil-text35 {
+  top: 8px;
+  left: 30px;
+  color: rgba(255, 255, 255, 1);
+  width: 177px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: Semi Bold;
+  text-align: left;
+  font-family: Inter;
+  font-weight: 700;
+  line-height: 129.99999523162842%;
+  font-stretch: normal;
+  text-decoration: none;
+}
+
+/* Contenedor principal del formulario */
+.profile-container {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 40px;
+  max-width: 800px;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 columnas */
+  gap: 20px 40px; /* espacio entre filas y columnas */
+}
+
+/* Título del formulario */
+.dashboard-title {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+/* Grupo de cada campo */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Etiquetas */
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Estilo general de inputs */
+.form-input, 
+.form-select {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-input span,
+.form-select span {
+  color: #aaa; /* estilo placeholder */
+}
+
+/* Icono en selects */
+.select-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Botón guardar */
+.form-actions {
+  grid-column: span 2; /* ocupa todo el ancho */
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-save {
+  background: #a3bd31; /* verde de la maqueta */
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-save:hover {
+  background: #8aa229;
+}
+
+/* Responsivo en pantallas pequeñas */
+@media (max-width: 768px) {
+  .profile-container {
+    grid-template-columns: 1fr; /* una columna */
+  }
+}
+
+
+
+
 
 
 
